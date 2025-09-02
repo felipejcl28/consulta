@@ -11,7 +11,7 @@ import unicodedata
 from io import BytesIO
 
 # ---------------- CONFIG ----------------
-RUTA_EXCEL = os.path.join(os.getcwd(), "personas.xlsx")
+RUTA_EXCEL = os.path.join(os.getcwd(), "informacion.xlsx")
 RUTA_IMAGENES = os.path.join(os.getcwd(), "IMAGENES")
 
 # ---------------- FUNCIONES AUXILIARES ----------------
@@ -101,6 +101,7 @@ if st.button("Buscar"):
         )
 
         st.markdown("<hr>", unsafe_allow_html=True)  # Línea divisoria entre resultados
+
 
 
 
