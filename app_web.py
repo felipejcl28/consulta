@@ -11,8 +11,8 @@ import unicodedata
 from io import BytesIO
 
 
-RUTA_EXCEL = r"C:\Users\diegof.jaramillo\Desktop\SAC_2025\PROG\CONS_POWER_BI\personas.xlsx"
-RUTA_IMAGENES = r"C:\Users\diegof.jaramillo\Desktop\SAC_2025\PROG\CONS_POWER_BI\IMAGENES"
+RUTA_EXCEL = os.path.join(os.getcwd(), "personas.xlsx")
+RUTA_IMAGENES = os.path.join(os.getcwd(), "IMAGENES")
 
 
 def normalizar_texto(texto: str) -> str:
@@ -90,6 +90,7 @@ if st.button("Buscar"):
             file_name="resultados_texto.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         )
+
 
 
 
