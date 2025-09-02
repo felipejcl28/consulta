@@ -3,6 +3,3 @@ pandas
 Pillow
 openpyxl
 deepface
-tensorflow==2.13.0
-opencv-python
-gdown
