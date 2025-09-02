@@ -1,5 +1,8 @@
 streamlit
 pandas
-pillow
+Pillow
 openpyxl
 deepface
+tensorflow
+opencv-python
+gdown
