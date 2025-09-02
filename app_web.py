@@ -11,7 +11,7 @@ import unicodedata
 from io import BytesIO
 
 
-RUTA_EXCEL = os.path.join(os.getcwd(), "personas.xlsx")
+RUTA_EXCEL = os.path.join(os.getcwd(), "informacion.xlsx")
 RUTA_IMAGENES = os.path.join(os.getcwd(), "IMAGENES")
 
 
@@ -93,6 +93,7 @@ if st.button("Buscar"):
             file_name="resultados_texto.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         )
+
 
 
 
