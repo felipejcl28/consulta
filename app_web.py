@@ -69,8 +69,11 @@ if st.button("Buscar"):
                 with cols[0]:
                     foto_nombre = str(row.get("IMAGEN", "")).strip()
                     foto_path = os.path.join(RUTA_IMAGENES, foto_nombre)
-                    if os.path.exists(foto_path) and foto_nombre:
-                        st.image(Image.open(foto_path), width=220, caption=row["NOMBRE"])
+
+                if os.path.exists(foto_path) and foto_nombre:
+                    st.image(Image.open(foto_path), width=250, caption=row["NOMBRE"])
+                else:
+                    st.warning(f"No se encontró la imagen: {foto_nombre}")
                 with cols[1]:
                     st.markdown(f"""
                         <div style="background:#f9f9f9;padding:10px;border-radius:10px;">
@@ -90,6 +93,7 @@ if st.button("Buscar"):
             file_name="resultados_texto.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         )
+
 
 
 
