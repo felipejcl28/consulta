@@ -10,13 +10,10 @@ from PIL import Image
 import unicodedata
 from io import BytesIO
 
-# ---------------- CONFIG ----------------
 RUTA_EXCEL = os.path.join(os.getcwd(), "informacion.xlsx")
 RUTA_IMAGENES = os.path.join(os.getcwd(), "IMAGENES")
 
-# ---------------- FUNCIONES AUXILIARES ----------------
 def normalizar_texto(texto: str) -> str:
-    """Normaliza texto quitando acentos y pasando a minúsculas"""
     if not isinstance(texto, str):
         return ""
     texto = texto.strip().lower()
@@ -25,36 +22,30 @@ def normalizar_texto(texto: str) -> str:
     return texto
 
 def exportar_excel(df: pd.DataFrame) -> BytesIO:
-    """Exporta DataFrame a Excel en memoria"""
     output = BytesIO()
     with pd.ExcelWriter(output, engine="openpyxl") as writer:
         df.to_excel(writer, index=False)
     return output.getvalue()
 
-# ---------------- CARGA DE DATOS ----------------
 if not os.path.exists(RUTA_EXCEL):
     st.error(f"❌ No se encontró el archivo Excel en {RUTA_EXCEL}")
     st.stop()
 
 df = pd.read_excel(RUTA_EXCEL)
 
-# Normalizamos columnas para búsqueda
 df["NOMBRE_NORM"] = df["NOMBRE"].apply(normalizar_texto)
 df["ID_NORM"] = df["ID"].astype(str).apply(normalizar_texto)
-df["IMAGEN"] = df["IMAGEN"].astype(str).str.strip().str.lower()  # Normaliza nombres de imágenes
+df["IMAGEN"] = df["IMAGEN"].astype(str).str.strip().str.lower() 
 
-# ---------------- INTERFAZ ----------------
 st.set_page_config(page_title="Consulta Personas", page_icon="🔎", layout="centered")
 st.title("🔎 CONSULTA PERSONAS")
 
-# ---------------- BÚSQUEDA ----------------
 criterio = st.selectbox("Buscar por:", ["NOMBRE", "ID"])
 query = st.text_input(f"Ingrese {criterio}:")
 
 if st.button("Buscar"):
     query_norm = normalizar_texto(query)
 
-    # Búsqueda parcial
     if criterio == "NOMBRE":
         resultados = df[df["NOMBRE_NORM"].str.contains(query_norm, na=False)]
     else:
@@ -67,19 +58,17 @@ if st.button("Buscar"):
 
         for _, row in resultados.iterrows():
             with st.container():
-                cols = st.columns([1, 2])  # 1 para imagen, 2 para info
+                cols = st.columns([1, 2])  
 
-                # ---------------- IMAGEN ----------------
                 with cols[0]:
                     foto_nombre = row.get("IMAGEN", "")
                     foto_path = os.path.join(RUTA_IMAGENES, foto_nombre)
 
                     if os.path.exists(foto_path) and foto_nombre:
-                        st.image(Image.open(foto_path), width=250, caption=row["NOMBRE"])
+                        st.image(Image.open(foto_path), width=230, caption=row["NOMBRE"])
                     else:
                         st.write(f"⚠️ No se encontró la imagen: {foto_nombre}")
 
-                # ---------------- INFORMACIÓN ----------------
                 with cols[1]:
                     st.markdown(f"""
                         <div style="background:#f9f9f9;padding:10px;border-radius:10px;">
@@ -90,7 +79,6 @@ if st.button("Buscar"):
                         </div>
                     """, unsafe_allow_html=True)
 
-        # ---------------- EXPORTAR RESULTADOS ----------------
         resultados_export = resultados.drop(columns=["NOMBRE_NORM", "ID_NORM"], errors="ignore")
         excel_data = exportar_excel(resultados_export)
         st.download_button(
@@ -101,6 +89,7 @@ if st.button("Buscar"):
         )
 
         st.markdown("<hr>", unsafe_allow_html=True)  # Línea divisoria entre resultados
+
 
 
 
