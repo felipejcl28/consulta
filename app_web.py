@@ -68,7 +68,7 @@ if st.button("Buscar"):
                     foto_path = os.path.join(RUTA_IMAGENES, foto_nombre)
 
                     if os.path.exists(foto_path) and foto_nombre:
-                        st.image(Image.open(foto_path), width=250, caption=row["NOMBRE"])
+                        st.image(Image.open(foto_path), width=230, caption=row["NOMBRE"])
                     else:
                         st.write(f"⚠️ No se encontró la imagen: {foto_nombre}")
 
@@ -92,6 +92,7 @@ if st.button("Buscar"):
         )
 
         st.markdown("<hr>", unsafe_allow_html=True)  # Línea divisoria entre resultados
+
 
 
 
